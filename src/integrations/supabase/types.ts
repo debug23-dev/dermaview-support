@@ -14,16 +14,215 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      patients: {
+        Row: {
+          address: string | null
+          age: number | null
+          allergies: string | null
+          contact_number: string | null
+          created_at: string
+          created_by: string | null
+          current_medication: string | null
+          district: string | null
+          full_name: string
+          gender: string | null
+          id: string
+          medical_history: string | null
+          patient_code: string
+          previous_skin_disease: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          age?: number | null
+          allergies?: string | null
+          contact_number?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_medication?: string | null
+          district?: string | null
+          full_name: string
+          gender?: string | null
+          id?: string
+          medical_history?: string | null
+          patient_code: string
+          previous_skin_disease?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          age?: number | null
+          allergies?: string | null
+          contact_number?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_medication?: string | null
+          district?: string | null
+          full_name?: string
+          gender?: string | null
+          id?: string
+          medical_history?: string | null
+          patient_code?: string
+          previous_skin_disease?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      screening_cases: {
+        Row: {
+          affected_area: string | null
+          bleeding: boolean
+          confidence: number | null
+          created_at: string
+          created_by: string | null
+          discharge: boolean
+          doctor_notes: string | null
+          duration: string | null
+          fever: boolean
+          id: string
+          image_path: string | null
+          itching_level: number
+          pain_level: number
+          patient_id: string
+          predicted_class: string | null
+          recommendation: string | null
+          redness: boolean
+          reviewed_by: string | null
+          risk_level: Database["public"]["Enums"]["risk_level"] | null
+          spreading: boolean
+          status: Database["public"]["Enums"]["case_status"]
+          swelling: boolean
+          symptom_description: string | null
+          top3_predictions_json: Json | null
+          updated_at: string
+        }
+        Insert: {
+          affected_area?: string | null
+          bleeding?: boolean
+          confidence?: number | null
+          created_at?: string
+          created_by?: string | null
+          discharge?: boolean
+          doctor_notes?: string | null
+          duration?: string | null
+          fever?: boolean
+          id?: string
+          image_path?: string | null
+          itching_level?: number
+          pain_level?: number
+          patient_id: string
+          predicted_class?: string | null
+          recommendation?: string | null
+          redness?: boolean
+          reviewed_by?: string | null
+          risk_level?: Database["public"]["Enums"]["risk_level"] | null
+          spreading?: boolean
+          status?: Database["public"]["Enums"]["case_status"]
+          swelling?: boolean
+          symptom_description?: string | null
+          top3_predictions_json?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          affected_area?: string | null
+          bleeding?: boolean
+          confidence?: number | null
+          created_at?: string
+          created_by?: string | null
+          discharge?: boolean
+          doctor_notes?: string | null
+          duration?: string | null
+          fever?: boolean
+          id?: string
+          image_path?: string | null
+          itching_level?: number
+          pain_level?: number
+          patient_id?: string
+          predicted_class?: string | null
+          recommendation?: string | null
+          redness?: boolean
+          reviewed_by?: string | null
+          risk_level?: Database["public"]["Enums"]["risk_level"] | null
+          spreading?: boolean
+          status?: Database["public"]["Enums"]["case_status"]
+          swelling?: boolean
+          symptom_description?: string | null
+          top3_predictions_json?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "screening_cases_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "doctor" | "assistant"
+      case_status: "pending_review" | "reviewed" | "referred" | "closed"
+      risk_level: "low" | "moderate" | "high"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +349,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "doctor", "assistant"],
+      case_status: ["pending_review", "reviewed", "referred", "closed"],
+      risk_level: ["low", "moderate", "high"],
+    },
   },
 } as const
