@@ -16,6 +16,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiPredictRouteImport } from './routes/api/predict'
 import { Route as AuthenticatedPatientsIndexRouteImport } from './routes/_authenticated/patients.index'
+import { Route as AuthenticatedPatientsNewRouteImport } from './routes/_authenticated/patients.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const AuthenticatedPatientsIndexRoute =
     path: '/patients/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPatientsNewRoute =
+  AuthenticatedPatientsNewRouteImport.update({
+    id: '/patients/new',
+    path: '/patients/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/predict': typeof ApiPredictRoute
+  '/patients/new': typeof AuthenticatedPatientsNewRoute
   '/patients/': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/predict': typeof ApiPredictRoute
+  '/patients/new': typeof AuthenticatedPatientsNewRoute
   '/patients': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRoutesById {
@@ -77,14 +86,28 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/predict': typeof ApiPredictRoute
+  '/_authenticated/patients/new': typeof AuthenticatedPatientsNewRoute
   '/_authenticated/patients/': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/login' | '/register' | '/dashboard' | '/api/predict' | '/patients/'
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/api/predict'
+    | '/patients/new'
+    | '/patients/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/dashboard' | '/api/predict' | '/patients'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/api/predict'
+    | '/patients/new'
+    | '/patients'
   id:
     | '__root__'
     | '/'
@@ -93,6 +116,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/dashboard'
     | '/api/predict'
+    | '/_authenticated/patients/new'
     | '/_authenticated/patients/'
   fileRoutesById: FileRoutesById
 }
@@ -155,16 +179,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPatientsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/patients/new': {
+      id: '/_authenticated/patients/new'
+      path: '/patients/new'
+      fullPath: '/patients/new'
+      preLoaderRoute: typeof AuthenticatedPatientsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedPatientsNewRoute: typeof AuthenticatedPatientsNewRoute
   AuthenticatedPatientsIndexRoute: typeof AuthenticatedPatientsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedPatientsNewRoute: AuthenticatedPatientsNewRoute,
   AuthenticatedPatientsIndexRoute: AuthenticatedPatientsIndexRoute,
 }
 
