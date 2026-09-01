@@ -18,6 +18,7 @@ import { Route as ApiPredictRouteImport } from './routes/api/predict'
 import { Route as AuthenticatedPatientsIndexRouteImport } from './routes/_authenticated/patients.index'
 import { Route as AuthenticatedPatientsIdRouteImport } from './routes/_authenticated/patients.$id'
 import { Route as AuthenticatedPatientsNewRouteImport } from './routes/_authenticated/patients.new'
+import { Route as AuthenticatedScreeningNewRouteImport } from './routes/_authenticated/screening.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -65,6 +66,12 @@ const AuthenticatedPatientsNewRoute =
     path: '/patients/new',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedScreeningNewRoute =
+  AuthenticatedScreeningNewRouteImport.update({
+    id: '/screening/new',
+    path: '/screening/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/api/predict': typeof ApiPredictRoute
   '/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/screening/new': typeof AuthenticatedScreeningNewRoute
   '/patients/': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +92,7 @@ export interface FileRoutesByTo {
   '/api/predict': typeof ApiPredictRoute
   '/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/screening/new': typeof AuthenticatedScreeningNewRoute
   '/patients': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +105,7 @@ export interface FileRoutesById {
   '/api/predict': typeof ApiPredictRoute
   '/_authenticated/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/_authenticated/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/_authenticated/screening/new': typeof AuthenticatedScreeningNewRoute
   '/_authenticated/patients/': typeof AuthenticatedPatientsIndexRoute
 }
 export interface FileRouteTypes {
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/patients/$id'
     | '/patients/new'
+    | '/screening/new'
     | '/patients/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/patients/$id'
     | '/patients/new'
+    | '/screening/new'
     | '/patients'
   id:
     | '__root__'
@@ -129,6 +141,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/_authenticated/patients/$id'
     | '/_authenticated/patients/new'
+    | '/_authenticated/screening/new'
     | '/_authenticated/patients/'
   fileRoutesById: FileRoutesById
 }
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPatientsNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/screening/new': {
+      id: '/_authenticated/screening/new'
+      path: '/screening/new'
+      fullPath: '/screening/new'
+      preLoaderRoute: typeof AuthenticatedScreeningNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -212,6 +232,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPatientsIdRoute: typeof AuthenticatedPatientsIdRoute
   AuthenticatedPatientsNewRoute: typeof AuthenticatedPatientsNewRoute
+  AuthenticatedScreeningNewRoute: typeof AuthenticatedScreeningNewRoute
   AuthenticatedPatientsIndexRoute: typeof AuthenticatedPatientsIndexRoute
 }
 
@@ -219,6 +240,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPatientsIdRoute: AuthenticatedPatientsIdRoute,
   AuthenticatedPatientsNewRoute: AuthenticatedPatientsNewRoute,
+  AuthenticatedScreeningNewRoute: AuthenticatedScreeningNewRoute,
   AuthenticatedPatientsIndexRoute: AuthenticatedPatientsIndexRoute,
 }
 
