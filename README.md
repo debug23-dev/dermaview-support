@@ -1,29 +1,29 @@
-# Welcome to your Lovable project
+# DermaCare AI
 
-This project was built with [Lovable](https://lovable.dev).
+Skin disease screening and doctor-review support system for clinics.
 
-## Build with Lovable
+- Staff auth (admin / doctor / assistant) with role-based visibility
+- Patient register with medical background
+- Screening cases: lesion photo + structured symptoms + notes
+- Screening-priority (low / moderate / high) and doctor review workflow
+- Multimodal prediction structure ready for a future image model + text model + late fusion
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+**Predictions are disabled until real model files are installed.** The app never fabricates results;
+`POST /api/predict` returns HTTP 503 while model files are missing.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Stack
+React + TanStack Start, Tailwind + shadcn/ui, Lovable Cloud (Postgres, auth, private storage).
 
-## Development
+## Quick start
+1. Register a staff account at `/register` (choose admin to see clinical detail).
+2. Add a patient, then create a screening case.
+3. Check `/settings` for model file status.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Docs
+- `PROJECT_DOCUMENTATION.md` — architecture and data model
+- `MODEL_INTEGRATION_GUIDE.md` — how to plug in the real models
+- `API_DOCUMENTATION.md` — endpoints
+- `docs/setup.md`, `docs/model_files.md`, `docs/deployment.md`, `docs/user_workflow.md`, `docs/research_notes.md`
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Medical disclaimer
+This is an AI screening result, not a medical diagnosis. Please consult a qualified dermatologist for confirmation.
