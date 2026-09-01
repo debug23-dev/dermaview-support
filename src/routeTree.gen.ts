@@ -18,6 +18,7 @@ import { Route as ApiPredictRouteImport } from './routes/api/predict'
 import { Route as AuthenticatedPatientsIndexRouteImport } from './routes/_authenticated/patients.index'
 import { Route as AuthenticatedPatientsIdRouteImport } from './routes/_authenticated/patients.$id'
 import { Route as AuthenticatedPatientsNewRouteImport } from './routes/_authenticated/patients.new'
+import { Route as AuthenticatedScreeningIdRouteImport } from './routes/_authenticated/screening.$id'
 import { Route as AuthenticatedScreeningNewRouteImport } from './routes/_authenticated/screening.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -66,6 +67,12 @@ const AuthenticatedPatientsNewRoute =
     path: '/patients/new',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedScreeningIdRoute =
+  AuthenticatedScreeningIdRouteImport.update({
+    id: '/screening/$id',
+    path: '/screening/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedScreeningNewRoute =
   AuthenticatedScreeningNewRouteImport.update({
     id: '/screening/new',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/api/predict': typeof ApiPredictRoute
   '/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/screening/$id': typeof AuthenticatedScreeningIdRoute
   '/screening/new': typeof AuthenticatedScreeningNewRoute
   '/patients/': typeof AuthenticatedPatientsIndexRoute
 }
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/api/predict': typeof ApiPredictRoute
   '/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/screening/$id': typeof AuthenticatedScreeningIdRoute
   '/screening/new': typeof AuthenticatedScreeningNewRoute
   '/patients': typeof AuthenticatedPatientsIndexRoute
 }
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/api/predict': typeof ApiPredictRoute
   '/_authenticated/patients/$id': typeof AuthenticatedPatientsIdRoute
   '/_authenticated/patients/new': typeof AuthenticatedPatientsNewRoute
+  '/_authenticated/screening/$id': typeof AuthenticatedScreeningIdRoute
   '/_authenticated/screening/new': typeof AuthenticatedScreeningNewRoute
   '/_authenticated/patients/': typeof AuthenticatedPatientsIndexRoute
 }
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/patients/$id'
     | '/patients/new'
+    | '/screening/$id'
     | '/screening/new'
     | '/patients/'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/patients/$id'
     | '/patients/new'
+    | '/screening/$id'
     | '/screening/new'
     | '/patients'
   id:
@@ -141,6 +153,7 @@ export interface FileRouteTypes {
     | '/api/predict'
     | '/_authenticated/patients/$id'
     | '/_authenticated/patients/new'
+    | '/_authenticated/screening/$id'
     | '/_authenticated/screening/new'
     | '/_authenticated/patients/'
   fileRoutesById: FileRoutesById
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPatientsNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/screening/$id': {
+      id: '/_authenticated/screening/$id'
+      path: '/screening/$id'
+      fullPath: '/screening/$id'
+      preLoaderRoute: typeof AuthenticatedScreeningIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/screening/new': {
       id: '/_authenticated/screening/new'
       path: '/screening/new'
@@ -232,6 +252,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPatientsIdRoute: typeof AuthenticatedPatientsIdRoute
   AuthenticatedPatientsNewRoute: typeof AuthenticatedPatientsNewRoute
+  AuthenticatedScreeningIdRoute: typeof AuthenticatedScreeningIdRoute
   AuthenticatedScreeningNewRoute: typeof AuthenticatedScreeningNewRoute
   AuthenticatedPatientsIndexRoute: typeof AuthenticatedPatientsIndexRoute
 }
@@ -240,6 +261,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPatientsIdRoute: AuthenticatedPatientsIdRoute,
   AuthenticatedPatientsNewRoute: AuthenticatedPatientsNewRoute,
+  AuthenticatedScreeningIdRoute: AuthenticatedScreeningIdRoute,
   AuthenticatedScreeningNewRoute: AuthenticatedScreeningNewRoute,
   AuthenticatedPatientsIndexRoute: AuthenticatedPatientsIndexRoute,
 }
