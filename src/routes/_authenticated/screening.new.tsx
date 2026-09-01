@@ -25,7 +25,7 @@ import { assessRisk, type StructuredSymptoms } from "@/lib/prediction/risk";
 
 export const Route = createFileRoute("/_authenticated/screening/new")({
   validateSearch: (search: Record<string, unknown>) => ({
-    patient: typeof search.patient === "string" ? search.patient : undefined,
+    patient: typeof search["patient"] === "string" ? (search["patient"] as string) : undefined,
   }),
   head: () => ({
     meta: [
@@ -76,7 +76,15 @@ function NewScreeningPage() {
   const [description, setDescription] = useState("");
   const [itching, setItching] = useState(0);
   const [pain, setPain] = useState(0);
-  const [checks, setChecks] = useState<Record<string, boolean>>({});
+  type SignKey = "redness" | "swelling" | "bleeding" | "discharge" | "spreading" | "fever";
+  const [checks, setChecks] = useState<Record<SignKey, boolean>>({
+    redness: false,
+    swelling: false,
+    bleeding: false,
+    discharge: false,
+    spreading: false,
+    fever: false,
+  });
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -86,12 +94,12 @@ function NewScreeningPage() {
     () => ({
       itching_level: itching,
       pain_level: pain,
-      redness: !!checks.redness,
-      swelling: !!checks.swelling,
-      bleeding: !!checks.bleeding,
-      discharge: !!checks.discharge,
-      spreading: !!checks.spreading,
-      fever: !!checks.fever,
+      redness: checks.redness,
+      swelling: checks.swelling,
+      bleeding: checks.bleeding,
+      discharge: checks.discharge,
+      spreading: checks.spreading,
+      fever: checks.fever,
     }),
     [itching, pain, checks],
   );
@@ -158,7 +166,7 @@ function NewScreeningPage() {
         setModelNotice("No image attached — the case was saved for doctor review only.");
       }
 
-      const risk = assessRisk(symptoms, null);
+      const risk = assessRisk(null, symptoms);
       const { data: auth } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from("screening_cases")
@@ -169,12 +177,12 @@ function NewScreeningPage() {
           symptom_description: parsed.data.symptom_description,
           itching_level: itching,
           pain_level: pain,
-          redness: !!checks.redness,
-          swelling: !!checks.swelling,
-          bleeding: !!checks.bleeding,
-          discharge: !!checks.discharge,
-          spreading: !!checks.spreading,
-          fever: !!checks.fever,
+          redness: checks.redness,
+          swelling: checks.swelling,
+          bleeding: checks.bleeding,
+          discharge: checks.discharge,
+          spreading: checks.spreading,
+          fever: checks.fever,
           image_path: imagePath,
           predicted_class: predicted?.predicted_class ?? null,
           confidence: predicted?.confidence ?? null,

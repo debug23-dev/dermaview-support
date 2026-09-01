@@ -93,7 +93,7 @@ function DashboardPage() {
             <Link to="/patients/new">Add patient</Link>
           </Button>
           <Button asChild>
-            <Link to="/screening/new">New screening</Link>
+            <Link to="/screening/new" search={{ patient: undefined }}>New screening</Link>
           </Button>
         </div>
       </div>
